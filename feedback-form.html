@@ -9,7 +9,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f5f5f7;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -19,140 +19,224 @@
 
     .card {
       background: #fff;
-      border-radius: 16px;
-      padding: 40px;
+      border-radius: 24px;
       width: 100%;
       max-width: 520px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+      overflow: hidden;
     }
 
-    h1 { font-size: 22px; font-weight: 700; color: #1d1d1f; margin-bottom: 4px; }
-    .subtitle { font-size: 14px; color: #6e6e73; margin-bottom: 32px; }
+    .card-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 36px 40px 32px;
+    }
 
+    .card-header .icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .card-header h1 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .card-header p  { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.5; }
+
+    .card-body { padding: 36px 40px 40px; }
+
+    .row { display: flex; gap: 16px; }
+    .row .field { flex: 1; }
     .field { margin-bottom: 20px; }
-    label { display: block; font-size: 13px; font-weight: 600; color: #1d1d1f; margin-bottom: 6px; }
-    .optional { font-weight: 400; color: #6e6e73; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .optional { font-weight: 400; text-transform: none; letter-spacing: 0; color: #9ca3af; font-size: 11px; }
 
     input[type="text"],
     input[type="email"],
     textarea {
       width: 100%;
-      padding: 10px 14px;
-      border: 1.5px solid #d2d2d7;
-      border-radius: 10px;
+      padding: 11px 15px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
       font-size: 15px;
-      color: #1d1d1f;
-      background: #fff;
-      transition: border-color 0.15s;
+      color: #111827;
+      background: #f9fafb;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
       outline: none;
+      font-family: inherit;
     }
-    input:focus, textarea:focus { border-color: #0071e3; }
-    textarea { resize: vertical; min-height: 120px; font-family: inherit; }
+    input:focus, textarea:focus {
+      border-color: #667eea;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(102,126,234,0.12);
+    }
+    input::placeholder, textarea::placeholder { color: #9ca3af; }
+    textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
 
     /* Star rating */
-    .stars { display: flex; gap: 6px; flex-direction: row-reverse; justify-content: flex-end; }
+    .stars-wrapper { display: flex; align-items: center; gap: 12px; }
+    .stars { display: flex; gap: 4px; flex-direction: row-reverse; }
     .stars input { display: none; }
     .stars label {
-      font-size: 28px;
-      color: #d2d2d7;
+      font-size: 30px;
+      color: #e5e7eb;
       cursor: pointer;
-      transition: color 0.1s;
+      transition: color 0.1s, transform 0.1s;
       margin-bottom: 0;
       font-weight: 400;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: 0;
     }
+    .stars label:hover { transform: scale(1.15); }
     .stars input:checked ~ label,
     .stars label:hover,
-    .stars label:hover ~ label { color: #f5a623; }
+    .stars label:hover ~ label { color: #fbbf24; }
+    .stars-hint { font-size: 12px; color: #9ca3af; }
 
     button[type="submit"] {
       width: 100%;
-      padding: 13px;
-      background: #0071e3;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: #fff;
       border: none;
-      border-radius: 10px;
-      font-size: 16px;
+      border-radius: 12px;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 8px;
-      transition: background 0.15s;
+      margin-top: 4px;
+      transition: opacity 0.15s, transform 0.1s, box-shadow 0.15s;
+      box-shadow: 0 4px 14px rgba(102,126,234,0.4);
     }
-    button[type="submit"]:hover { background: #0077ed; }
-    button[type="submit"]:disabled { background: #b0c8f0; cursor: not-allowed; }
-
-    /* Success state */
-    .success {
-      display: none;
-      text-align: center;
-      padding: 20px 0 8px;
+    button[type="submit"]:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(102,126,234,0.45);
     }
-    .success .icon { font-size: 48px; margin-bottom: 12px; }
-    .success h2 { font-size: 20px; color: #1d1d1f; margin-bottom: 6px; }
-    .success p { font-size: 14px; color: #6e6e73; }
-    .success .ref { font-size: 12px; color: #b0b0b5; margin-top: 12px; }
+    button[type="submit"]:active { transform: translateY(0); }
+    button[type="submit"]:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
     .error-msg {
       display: none;
-      background: #fff2f2;
-      border: 1px solid #ffd0d0;
-      color: #c0392b;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
       font-size: 13px;
       padding: 10px 14px;
-      border-radius: 8px;
+      border-radius: 10px;
       margin-top: 12px;
+    }
+
+    .success {
+      display: none;
+      text-align: center;
+      padding: 16px 0 8px;
+    }
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 20px;
+      box-shadow: 0 8px 24px rgba(102,126,234,0.35);
+      color: #fff;
+    }
+    .success h2 { font-size: 22px; font-weight: 700; color: #111827; margin-bottom: 8px; }
+    .success p  { font-size: 14px; color: #6b7280; line-height: 1.6; }
+    .success .ref {
+      display: inline-block;
+      margin-top: 20px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: #9ca3af;
+      font-family: monospace;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <form id="form">
+    <div class="card-header">
+      <div class="icon">💬</div>
       <h1>Share your feedback</h1>
-      <p class="subtitle">We read every submission and reply personally.</p>
+      <p>We read every submission and reply personally — usually within 24 hours.</p>
+    </div>
 
-      <div class="field">
-        <label for="name">Name</label>
-        <input type="text" id="name" placeholder="Your name" required />
-      </div>
-
-      <div class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="you@example.com" required />
-      </div>
-
-      <div class="field">
-        <label for="subject">Subject <span class="optional">(optional)</span></label>
-        <input type="text" id="subject" placeholder="What's this about?" />
-      </div>
-
-      <div class="field">
-        <label>Rating <span class="optional">(optional)</span></label>
-        <div class="stars">
-          <input type="radio" id="s5" name="rating" value="5" /><label for="s5" title="5 stars">★</label>
-          <input type="radio" id="s4" name="rating" value="4" /><label for="s4" title="4 stars">★</label>
-          <input type="radio" id="s3" name="rating" value="3" /><label for="s3" title="3 stars">★</label>
-          <input type="radio" id="s2" name="rating" value="2" /><label for="s2" title="2 stars">★</label>
-          <input type="radio" id="s1" name="rating" value="1" /><label for="s1" title="1 star">★</label>
+    <div class="card-body">
+      <form id="form">
+        <div class="row">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="you@example.com" required />
+          </div>
         </div>
+
+        <div class="field">
+          <label for="subject">Subject <span class="optional">(optional)</span></label>
+          <input type="text" id="subject" placeholder="What's this about?" />
+        </div>
+
+        <div class="field">
+          <label>Rating <span class="optional">(optional)</span></label>
+          <div class="stars-wrapper">
+            <div class="stars">
+              <input type="radio" id="s5" name="rating" value="5" /><label for="s5" title="Excellent">★</label>
+              <input type="radio" id="s4" name="rating" value="4" /><label for="s4" title="Good">★</label>
+              <input type="radio" id="s3" name="rating" value="3" /><label for="s3" title="Okay">★</label>
+              <input type="radio" id="s2" name="rating" value="2" /><label for="s2" title="Poor">★</label>
+              <input type="radio" id="s1" name="rating" value="1" /><label for="s1" title="Terrible">★</label>
+            </div>
+            <span class="stars-hint" id="stars-hint">Click to rate</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Bug report, feature request, compliment — anything goes…" required></textarea>
+        </div>
+
+        <button type="submit" id="btn">Send Feedback</button>
+        <div class="error-msg" id="error"></div>
+      </form>
+
+      <div class="success" id="success">
+        <div class="success-icon">✓</div>
+        <h2>Thank you!</h2>
+        <p>Your feedback has been received.<br>We'll reply to your email shortly.</p>
+        <span class="ref" id="ref"></span>
       </div>
-
-      <div class="field">
-        <label for="message">Message</label>
-        <textarea id="message" placeholder="Tell us what you think…" required></textarea>
-      </div>
-
-      <button type="submit" id="btn">Send Feedback</button>
-      <div class="error-msg" id="error"></div>
-    </form>
-
-    <div class="success" id="success">
-      <div class="icon">✅</div>
-      <h2>Thanks for your feedback!</h2>
-      <p>We'll review your message and reply to your email shortly.</p>
-      <p class="ref" id="ref"></p>
     </div>
   </div>
 
   <script>
+    const hints = ['', 'Terrible', 'Poor', 'Okay', 'Good', 'Excellent'];
+    document.querySelectorAll('.stars input').forEach(input => {
+      input.addEventListener('change', () => {
+        document.getElementById('stars-hint').textContent = hints[input.value];
+      });
+    });
+
     document.getElementById('form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btn');
@@ -181,7 +265,7 @@
         if (data.success) {
           document.getElementById('form').style.display = 'none';
           document.getElementById('success').style.display = 'block';
-          document.getElementById('ref').textContent = `Reference: ${data.id}`;
+          document.getElementById('ref').textContent = `Reference #${data.id}`;
         } else {
           throw new Error(data.error || 'Something went wrong.');
         }
