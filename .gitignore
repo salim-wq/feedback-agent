@@ -1,0 +1,9 @@
+# credentials — never commit
+*.json.json
+gmail-credentials.json
+*credentials*.json
+*token*.json
+
+# logs
+*.log
+/tmp/

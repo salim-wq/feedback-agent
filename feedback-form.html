@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    h1 { font-size: 22px; font-weight: 700; color: #1d1d1f; margin-bottom: 4px; }
+    .subtitle { font-size: 14px; color: #6e6e73; margin-bottom: 32px; }
+
+    .field { margin-bottom: 20px; }
+    label { display: block; font-size: 13px; font-weight: 600; color: #1d1d1f; margin-bottom: 6px; }
+    .optional { font-weight: 400; color: #6e6e73; }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #d2d2d7;
+      border-radius: 10px;
+      font-size: 15px;
+      color: #1d1d1f;
+      background: #fff;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+    input:focus, textarea:focus { border-color: #0071e3; }
+    textarea { resize: vertical; min-height: 120px; font-family: inherit; }
+
+    /* Star rating */
+    .stars { display: flex; gap: 6px; flex-direction: row-reverse; justify-content: flex-end; }
+    .stars input { display: none; }
+    .stars label {
+      font-size: 28px;
+      color: #d2d2d7;
+      cursor: pointer;
+      transition: color 0.1s;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+    .stars input:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label { color: #f5a623; }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 13px;
+      background: #0071e3;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.15s;
+    }
+    button[type="submit"]:hover { background: #0077ed; }
+    button[type="submit"]:disabled { background: #b0c8f0; cursor: not-allowed; }
+
+    /* Success state */
+    .success {
+      display: none;
+      text-align: center;
+      padding: 20px 0 8px;
+    }
+    .success .icon { font-size: 48px; margin-bottom: 12px; }
+    .success h2 { font-size: 20px; color: #1d1d1f; margin-bottom: 6px; }
+    .success p { font-size: 14px; color: #6e6e73; }
+    .success .ref { font-size: 12px; color: #b0b0b5; margin-top: 12px; }
+
+    .error-msg {
+      display: none;
+      background: #fff2f2;
+      border: 1px solid #ffd0d0;
+      color: #c0392b;
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <form id="form">
+      <h1>Share your feedback</h1>
+      <p class="subtitle">We read every submission and reply personally.</p>
+
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Your name" required />
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required />
+      </div>
+
+      <div class="field">
+        <label for="subject">Subject <span class="optional">(optional)</span></label>
+        <input type="text" id="subject" placeholder="What's this about?" />
+      </div>
+
+      <div class="field">
+        <label>Rating <span class="optional">(optional)</span></label>
+        <div class="stars">
+          <input type="radio" id="s5" name="rating" value="5" /><label for="s5" title="5 stars">★</label>
+          <input type="radio" id="s4" name="rating" value="4" /><label for="s4" title="4 stars">★</label>
+          <input type="radio" id="s3" name="rating" value="3" /><label for="s3" title="3 stars">★</label>
+          <input type="radio" id="s2" name="rating" value="2" /><label for="s2" title="2 stars">★</label>
+          <input type="radio" id="s1" name="rating" value="1" /><label for="s1" title="1 star">★</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Tell us what you think…" required></textarea>
+      </div>
+
+      <button type="submit" id="btn">Send Feedback</button>
+      <div class="error-msg" id="error"></div>
+    </form>
+
+    <div class="success" id="success">
+      <div class="icon">✅</div>
+      <h2>Thanks for your feedback!</h2>
+      <p>We'll review your message and reply to your email shortly.</p>
+      <p class="ref" id="ref"></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btn');
+      const errorEl = document.getElementById('error');
+      errorEl.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      const rating = document.querySelector('input[name="rating"]:checked');
+      const payload = {
+        name:    document.getElementById('name').value,
+        email:   document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        rating:  rating ? rating.value : null,
+        message: document.getElementById('message').value,
+      };
+
+      try {
+        const res = await fetch('/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('form').style.display = 'none';
+          document.getElementById('success').style.display = 'block';
+          document.getElementById('ref').textContent = `Reference: ${data.id}`;
+        } else {
+          throw new Error(data.error || 'Something went wrong.');
+        }
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Send Feedback';
+      }
+    });
+  </script>
+</body>
+</html>

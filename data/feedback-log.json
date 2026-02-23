@@ -1,0 +1,34 @@
+[
+  {
+    "id": "fb_001",
+    "timestamp_processed": "2026-02-23T19:30:00Z",
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "category": "bug_report",
+    "sentiment": "negative",
+    "urgency": "high",
+    "key_points": [
+      "login completely broken after latest update",
+      "blank screen on login attempt",
+      "user unable to work — needs immediate fix"
+    ],
+    "reply_sent": true,
+    "urgent": true
+  },
+  {
+    "id": "fb_002",
+    "timestamp_processed": "2026-02-23T19:50:00Z",
+    "name": "Salim",
+    "email": "salim.tool.ai@gmail.com",
+    "category": "feature_request",
+    "sentiment": "positive",
+    "urgency": "low",
+    "key_points": [
+      "requesting dark mode option",
+      "long hours on platform causes eye strain",
+      "overall satisfied with the product"
+    ],
+    "reply_sent": true,
+    "urgent": false
+  }
+]

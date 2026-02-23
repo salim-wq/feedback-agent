@@ -1,0 +1,22 @@
+[
+  {
+    "id": "fb_001",
+    "timestamp": "2026-02-23T10:30:00Z",
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "subject": "Login broken after update",
+    "rating": 1,
+    "message": "Hi, I cannot log in at all after the latest update. It just shows a blank screen. This is urgent — I need access for my work. Please fix this immediately!",
+    "status": "replied"
+  },
+  {
+    "id": "fb_002",
+    "timestamp": "2026-02-23T19:45:00Z",
+    "name": "Salim",
+    "email": "salim.tool.ai@gmail.com",
+    "subject": "Dark mode support",
+    "rating": 4,
+    "message": "Love the product overall! One thing I'd really love to see is a dark mode option. Spending long hours on the platform and the bright white interface gets tiring on the eyes. Would be a great quality-of-life improvement. Keep up the great work!",
+    "status": "replied"
+  }
+]
