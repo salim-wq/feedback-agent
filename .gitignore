@@ -1,4 +1,5 @@
 # credentials — never commit
+.env
 *.json.json
 gmail-credentials.json
 *credentials*.json
